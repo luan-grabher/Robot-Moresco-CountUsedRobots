@@ -20,7 +20,7 @@ public class ZAC_Model {
      * execs de cada email sem o @
      *
      */
-    private static final String sqlGetZACTasks = FileManager.getText(FileManager.getFile("sql\\getZACTasks.sql"));
+    private static final String sqlGetZACTasks = FileManager.getText(FileManager.getFile(".\\sql\\getZACTasks.sql"));
 
     public static void addZacUses() {
         Map<String, String> swaps = new HashMap<>();
