@@ -7,7 +7,6 @@ import java.io.File;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.Calendar;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -15,8 +14,9 @@ public class RobotMorescoCountUsedRobots {
 
     public static String testParameters = "";
     public static String nomeApp = "";
-    public static Integer month = 1;
+    public static Integer month = 0;
     public static Integer year = 2021;
+    public static Calendar monthCal = Calendar.getInstance();
 
     public static void main(String[] args) {
 
@@ -31,10 +31,18 @@ public class RobotMorescoCountUsedRobots {
                 robo.definirParametros(testParameters);
             }
 
-            Calendar cal = Calendar.getInstance();
-            cal.add(Calendar.MONTH, -1);
-            month = robo.parametros.values.get("mes") == null? cal.get(Calendar.MONTH): Integer.valueOf(robo.parametros.values.get("mes")) - 1;
-            year = robo.parametros.values.get("ano") == null? cal.get(Calendar.YEAR): Integer.valueOf(robo.parametros.values.get("ano"));
+            
+            //Por padrao define como o mês anterior ao atual
+            monthCal.add(Calendar.MONTH, -1);
+            
+            //Se o mes for null, pega o mes do calendario, se não pega o mes dos parametros e diminui 1 para ficar no padrao do calendario
+            month = robo.parametros.values.get("mes") == null? monthCal.get(Calendar.MONTH) : Integer.valueOf(robo.parametros.values.get("mes")) - 1;
+            year = robo.parametros.values.get("ano") == null? monthCal.get(Calendar.YEAR): Integer.valueOf(robo.parametros.values.get("ano"));
+            
+            //Atualiza o calendario
+            monthCal.set(Calendar.DATE, 1);
+            monthCal.set(Calendar.YEAR, year);
+            monthCal.set(Calendar.MONTH, month);
             
             nomeApp += month + "/" + year;
 

@@ -5,6 +5,7 @@ import Entity.Warning;
 import java.util.HashMap;
 import java.util.Map;
 import robot.moresco.countusedrobots.Model.ServerFiles_Model;
+import robot.moresco.countusedrobots.Model.ZAC_Model;
 
 public class Controller {
 
@@ -15,13 +16,7 @@ public class Controller {
 
         @Override
         public void run() {
-            /**
-             * Select de todas as tarefas do ZAC do mês
-             *
-             * Percorre as tarefas -- Se o email não for ti01 ---- Adiciona ao
-             * mapa de execs de cada email sem o @
-             *
-             */
+            ZAC_Model.addZacUses();
         }
 
     }
