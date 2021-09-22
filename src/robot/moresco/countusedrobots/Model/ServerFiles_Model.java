@@ -3,7 +3,7 @@ package robot.moresco.countusedrobots.Model;
 import fileManager.FileManager;
 import Dates.Dates;
 import java.util.Calendar;
-import java.util.HashMap;
+import java.util.TreeMap;
 import static robot.moresco.countusedrobots.Controller.uses;
 import static robot.moresco.countusedrobots.RobotMorescoCountUsedRobots.month;
 import static robot.moresco.countusedrobots.RobotMorescoCountUsedRobots.year;
@@ -22,7 +22,7 @@ public class ServerFiles_Model {
             //Se for do mes definido
             if (cal.get(Calendar.MONTH) == month && cal.get(Calendar.YEAR) == year) {
                 //Se nao tiver o mapa da TAREFA cria
-                uses.putIfAbsent(cols[2], new HashMap<>());
+                uses.putIfAbsent(cols[2], new TreeMap<>());
 
                 //Se não tiver aquele USUARIO na tarefa coloca
                 uses.get(cols[2]).putIfAbsent(cols[1], 0);

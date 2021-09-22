@@ -6,6 +6,7 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 import static robot.moresco.countusedrobots.Controller.uses;
 import static robot.moresco.countusedrobots.RobotMorescoCountUsedRobots.monthCal;
 import sql.Database;
@@ -19,7 +20,7 @@ public class ZAC_Model {
      * execs de cada email sem o @
      *
      */
-    private static final String sqlGetZACTasks = FileManager.getText(FileManager.getFile("\\sql\\getZACTasks.sql"));
+    private static final String sqlGetZACTasks = FileManager.getText(FileManager.getFile("sql\\getZACTasks.sql"));
 
     public static void addZacUses() {
         Map<String, String> swaps = new HashMap<>();
@@ -35,7 +36,7 @@ public class ZAC_Model {
             String user = (new Parameters(monthTask.get("descricao").toString())).values.get("email").split("@")[0];
             
             //Se nao tiver o mapa da TAREFA cria
-            uses.putIfAbsent(tarefa, new HashMap<>());
+            uses.putIfAbsent(tarefa, new TreeMap<>());
 
             //Se não tiver aquele USUARIO na tarefa coloca
             uses.get(tarefa).putIfAbsent(user, 0);

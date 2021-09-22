@@ -2,15 +2,21 @@ package robot.moresco.countusedrobots;
 
 import Entity.Executavel;
 import Entity.Warning;
-import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 import robot.moresco.countusedrobots.Model.ServerFiles_Model;
 import robot.moresco.countusedrobots.Model.ZAC_Model;
 
 public class Controller {
 
+    public static List<String> ignoreUsers = new ArrayList<String>(Arrays.asList("ti01"));
+    public static List<String> ignoreTasks = new ArrayList<String>(Arrays.asList("InsertOutlookSignature"));
+
     // Tarefa --> Usuario --> Contagem
-    public static Map<String, Map<String, Integer>> uses = new HashMap<>();
+    public static Map<String, Map<String, Integer>> uses = new TreeMap<>();
 
     public class getZACUses extends Executavel {
 
@@ -32,11 +38,13 @@ public class Controller {
 
             uses.forEach((task, users) -> {
                 users.forEach((user, count) -> {
-                    table.append("<tr>");
-                    table.append("<td>").append(task).append("</td>");
-                    table.append("<td>").append(user).append("</td>");
-                    table.append("<td>").append(count).append("</td>");
-                    table.append("</tr>");
+                    if (!ignoreUsers.contains(user) && !ignoreTasks.contains(task)) {
+                        table.append("<tr>");
+                        table.append("<td>").append(task).append("</td>");
+                        table.append("<td>").append(user).append("</td>");
+                        table.append("<td>").append(count).append("</td>");
+                        table.append("</tr>");
+                    }
                 });
             });
 
