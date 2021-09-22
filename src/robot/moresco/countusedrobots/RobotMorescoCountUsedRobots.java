@@ -8,6 +8,7 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class RobotMorescoCountUsedRobots {
@@ -32,8 +33,8 @@ public class RobotMorescoCountUsedRobots {
 
             Calendar cal = Calendar.getInstance();
             cal.add(Calendar.MONTH, -1);
-            month = robo.parametros.values.get("mes") == null? cal.get(Calendar.MONTH): Integer.valueOf(robo.parametros.values.get("mes"));
-            year = robo.parametros.values.get("ano") == null? cal.get(Calendar.YEAR): Integer.valueOf(robo.parametros.values.get("ano"));;
+            month = robo.parametros.values.get("mes") == null? cal.get(Calendar.MONTH): Integer.valueOf(robo.parametros.values.get("mes")) - 1;
+            year = robo.parametros.values.get("ano") == null? cal.get(Calendar.YEAR): Integer.valueOf(robo.parametros.values.get("ano"));
             
             nomeApp += month + "/" + year;
 
@@ -57,10 +58,10 @@ public class RobotMorescoCountUsedRobots {
     public static String start() {
         Controller controller = new Controller();
 
-        Map<String, Executavel> execs = new HashMap<>();
-        execs.put("Pegando usos do G:", controller.new getServerUses());
-        execs.put("Pegando usos do ZAC", controller.new getZACUses());
-        execs.put("Criando tabela de usos", controller.new createTableUses());
+        Map<String, Executavel> execs = new LinkedHashMap<>();
+        execs.put("1 - Pegando usos do G:", controller.new getServerUses());
+        execs.put("2 - Pegando usos do ZAC", controller.new getZACUses());
+        execs.put("3 - Criando tabela de usos", controller.new createTableUses());
 
         return AppRobo.rodarExecutaveis(nomeApp, execs);
     }

@@ -21,13 +21,13 @@ public class ServerFiles_Model {
 
             //Se for do mes definido
             if (cal.get(Calendar.MONTH) == month && cal.get(Calendar.YEAR) == year) {
-                //Se nao tiver o mapa da tarefa cria
+                //Se nao tiver o mapa da TAREFA cria
                 uses.putIfAbsent(cols[2], new HashMap<>());
 
-                //Se não tiver aquele usuario na tarefa coloca
+                //Se não tiver aquele USUARIO na tarefa coloca
                 uses.get(cols[2]).putIfAbsent(cols[1], 0);
 
-                //Coloca no usuario e tarefa + 1
+                //ADICIONA +USOS Coloca no usuario e tarefa + 1
                 uses.get(cols[2]).put(cols[1], uses.get(cols[2]).get(cols[1]) + 1);
             }
         }

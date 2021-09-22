@@ -15,7 +15,13 @@ public class Controller {
 
         @Override
         public void run() {
-            ServerFiles_Model.getFileUsesMap();
+            /**
+             * Select de todas as tarefas do ZAC do mês
+             *
+             * Percorre as tarefas -- Se o email não for ti01 ---- Adiciona ao
+             * mapa de execs de cada email sem o @
+             *
+             */
         }
 
     }
@@ -50,13 +56,7 @@ public class Controller {
 
         @Override
         public void run() {
-            /**
-             * Select de todas as tarefas do ZAC do mês
-             *
-             * Percorre as tarefas -- Se o email não for ti01 ---- Adiciona ao
-             * mapa de execs de cada email sem o @
-             *
-             */
+            ServerFiles_Model.getFileUsesMap();
         }
     }
 }
