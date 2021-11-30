@@ -23,7 +23,7 @@ public class RobotMorescoCountUsedRobots {
     public static void main(String[] args) {
 
         try {
-            ini = new Ini(fileManager.FileManager.getFile("config.ini"));
+            ini = new Ini(fileManager.FileManager.getFile("Robot-Moresco-CountUsedRobots.ini"));
 
             nomeApp = "Utilização dos robôs mensal ";
 
