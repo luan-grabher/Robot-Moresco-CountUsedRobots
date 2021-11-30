@@ -21,11 +21,15 @@ public class ZAC_Model {
      *
      */
     private static final String sqlGetZACTasks = FileManager.getText(FileManager.getFile(".\\sql\\getZACTasks.sql"));
+    private static final String sqlGetAllZACTasks = FileManager.getText(FileManager.getFile(".\\sql\\getAllZacTasks.sql"));
 
     public static void addZacUses() {
         Map<String, String> swaps = new HashMap<>();
-        swaps.put("date_start", monthCal.get(Calendar.YEAR) + "-" + (monthCal.get(Calendar.MONTH) + 1) + "-01");
-        swaps.put("date_end", monthCal.get(Calendar.YEAR) + "-" + (monthCal.get(Calendar.MONTH) + 1) + "-" + monthCal.getLeastMaximum(Calendar.DATE));
+        //swaps.put("date_start", monthCal.get(Calendar.YEAR) + "-" + (monthCal.get(Calendar.MONTH) + 1) + "-01");
+        //swaps.put("date_end", monthCal.get(Calendar.YEAR) + "-" + (monthCal.get(Calendar.MONTH) + 1) + "-" + monthCal.getLeastMaximum(Calendar.DATE));
+        
+        swaps.put("date_start", "2021-01-01");
+        swaps.put("date_end", "2021-12-01");
 
         Database.setStaticObject(new Database("mysql.cfg"));
 
@@ -43,6 +47,17 @@ public class ZAC_Model {
 
             //ADICIONA + USOS Coloca no usuario e tarefa + 1
             uses.get(tarefa).put(user, uses.get(tarefa).get(user) + 1);
+        }
+        
+        List<Map<String, Object>> allTasks = Database.getDatabase().getMap(sqlGetAllZACTasks, new HashMap<>());
+        
+        for(Map<String,Object> task: allTasks){
+            String nome = task.get("nome").toString();
+            
+            if(!uses.containsKey(nome)){                
+                uses.putIfAbsent(nome, new TreeMap<>());
+                uses.get(nome).put("TAREFA NÃO UTILIZADA", 0);
+            }           
         }
     }
 }

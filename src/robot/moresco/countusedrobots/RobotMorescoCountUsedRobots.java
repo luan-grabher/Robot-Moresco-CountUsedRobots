@@ -9,6 +9,7 @@ import java.io.StringWriter;
 import java.util.Calendar;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import org.ini4j.Ini;
 
 public class RobotMorescoCountUsedRobots {
 
@@ -17,10 +18,12 @@ public class RobotMorescoCountUsedRobots {
     public static Integer month = 0;
     public static Integer year = 2021;
     public static Calendar monthCal = Calendar.getInstance();    
+    public static Ini ini;
 
     public static void main(String[] args) {
 
         try {
+            ini = new Ini(fileManager.FileManager.getFile("config.ini"));
 
             nomeApp = "Utilização dos robôs mensal ";
 

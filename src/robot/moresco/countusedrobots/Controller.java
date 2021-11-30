@@ -2,21 +2,20 @@ package robot.moresco.countusedrobots;
 
 import Entity.Executavel;
 import Entity.Warning;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
+import org.ini4j.Profile.Section;
 import robot.moresco.countusedrobots.Model.ServerFiles_Model;
 import robot.moresco.countusedrobots.Model.ZAC_Model;
+import static robot.moresco.countusedrobots.RobotMorescoCountUsedRobots.ini;
 import static robot.moresco.countusedrobots.RobotMorescoCountUsedRobots.month;
 
-public class Controller {
+public class Controller {    
 
-    public static List<String> ignoreUsers = new ArrayList<String>(Arrays.asList("ti01"));
-    public static List<String> ignoreTasks = new ArrayList<String>(Arrays.asList("InsertOutlookSignature"));
-    public Integer ignoredTasks = 0;
+    public static Section ignoreUsers =  ini.get("ignore users");
+    public static Section ignoreTasks = ini.get("ignore tasks");;
+    public Integer usedTasks = 0;
+    public Integer notUsedTasks = 0;
 
     // Tarefa --> Usuario --> Contagem
     public static Map<String, Map<String, Integer>> uses = new TreeMap<>();
@@ -43,27 +42,34 @@ public class Controller {
                 Boolean[] ignored = new Boolean[]{false};
                 
                 users.forEach((user, count) -> {
-                    if (!ignoreUsers.contains(user) && !ignoreTasks.contains(task)) {
+                    if (!ignoreUsers.containsKey(user) && !ignoreTasks.containsKey(task)) {
                         table.append("<tr>");
                         table.append("<td>").append(task).append("</td>");
                         table.append("<td>").append(user).append("</td>");
                         table.append("<td>").append(count).append("</td>");
                         table.append("</tr>");
-                    }else{
-                        ignored[0] = true;
+                        
+                        if(count > 0){
+                            usedTasks++;
+                        }else{
+                            notUsedTasks++;
+                        }
                     }
-                });
-                
-                if(ignored[0]){
-                    ignoredTasks++;
-                }
+                });                
             });
 
             table.append("</table>");
             
             System.out.println(uses);
+            
+            StringBuilder taskUses = new StringBuilder();
+            taskUses.append("Total de robôs no mês").append((month + 1)).append(": ").append((usedTasks+notUsedTasks));
+            taskUses.append("<br>Robôs utilizados: ").append(usedTasks);
+            taskUses.append("<br>Robôs NÃO utilizados: ").append(notUsedTasks);
+            taskUses.append("<br><br>").append(table.toString());
+            
 
-            throw new Warning("Total de Robôs e Programas usados no mês " + (month + 1) + ": " + (uses.size() - ignoredTasks) + "<br><br>" + table.toString());
+            throw new Warning(taskUses.toString());
         }
 
     }
