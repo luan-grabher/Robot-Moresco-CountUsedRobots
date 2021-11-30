@@ -12,8 +12,8 @@ import static robot.moresco.countusedrobots.RobotMorescoCountUsedRobots.month;
 
 public class Controller {    
 
-    public static Section ignoreUsers =  ini.get("ignore users");
-    public static Section ignoreTasks = ini.get("ignore tasks");;
+    public static Section ignoreUsers =(Section)  ini.get("ignore users");
+    public static Section ignoreTasks =(Section) ini.get("ignore tasks");;
     public Integer usedTasks = 0;
     public Integer notUsedTasks = 0;
 

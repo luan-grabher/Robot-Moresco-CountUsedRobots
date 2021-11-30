@@ -25,11 +25,11 @@ public class ZAC_Model {
 
     public static void addZacUses() {
         Map<String, String> swaps = new HashMap<>();
-        //swaps.put("date_start", monthCal.get(Calendar.YEAR) + "-" + (monthCal.get(Calendar.MONTH) + 1) + "-01");
-        //swaps.put("date_end", monthCal.get(Calendar.YEAR) + "-" + (monthCal.get(Calendar.MONTH) + 1) + "-" + monthCal.getLeastMaximum(Calendar.DATE));
+        swaps.put("date_start", monthCal.get(Calendar.YEAR) + "-" + (monthCal.get(Calendar.MONTH) + 1) + "-01");
+        swaps.put("date_end", monthCal.get(Calendar.YEAR) + "-" + (monthCal.get(Calendar.MONTH) + 1) + "-" + monthCal.getLeastMaximum(Calendar.DATE));
         
-        swaps.put("date_start", "2021-01-01");
-        swaps.put("date_end", "2021-12-01");
+        //swaps.put("date_start", "2021-01-01");
+        //swaps.put("date_end", "2021-12-01");
 
         Database.setStaticObject(new Database("mysql.cfg"));
 

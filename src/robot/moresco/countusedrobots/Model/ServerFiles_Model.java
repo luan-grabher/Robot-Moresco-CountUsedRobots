@@ -13,7 +13,7 @@ import static robot.moresco.countusedrobots.RobotMorescoCountUsedRobots.year;
 public class ServerFiles_Model {
 
     public static String[] fileUsesLines = FileManager.getText(FileManager.getFile("\\\\HEIMERDINGER\\docs\\Informatica\\Programas\\Moresco\\02 - Arquivos de Programas\\programas_usados.csv")).split("\r\n");
-    public static String[] tasksOnFolder = FileManager.getFile("\\\\heimerdinger\\docs\\Informatica\\Programas\\Moresco\\01 - Programas").list();
+    public static String[] tasksOnFolder = FileManager.getFile("\\\\HEIMERDINGER\\docs\\Informatica\\Programas\\Moresco\\01 - Programas").list();
 
     public static void getFileUsesMap() {
         for (String line : fileUsesLines) {
@@ -23,7 +23,7 @@ public class ServerFiles_Model {
             Calendar cal = Dates.getCalendarFromFormat(cols[0].split(" ")[0], "yyyy-MM-dd");
 
             //Se for do mes definido
-            if (/*cal.get(Calendar.MONTH) == month && */cal.get(Calendar.YEAR) == year) {
+            if (cal.get(Calendar.MONTH) == month && cal.get(Calendar.YEAR) == year) {
                 String tarefa = cols[2];
 
                 if (ini.get("replace", tarefa) != null) {
