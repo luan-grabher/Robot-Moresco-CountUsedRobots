@@ -1,0 +1,12 @@
+{
+    "java.project.referencedLibraries": [
+        "lib/**/*.jar",
+        "c:\\Users\\Administrador\\Documents\\NetBeansProjects\\Executor\\dist\\Executor.jar",
+        "c:\\Users\\Administrador\\Documents\\NetBeansProjects\\SimpleView\\dist\\SimpleView.jar",
+        "c:\\Users\\Administrador\\Documents\\NetBeansProjects\\Sql\\dist\\SQL.jar",
+        "c:\\Users\\Administrador\\Documents\\NetBeansProjects\\Dates\\dist\\Dates.jar",
+        "c:\\Users\\Administrador\\Documents\\NetBeansProjects\\Jar-Vendors\\ini4j-0.5.4-jdk14.jar",
+        "c:\\Users\\Administrador\\Documents\\NetBeansProjects\\Jar-Vendors\\mysql-connector-java-8.0.13.jar",
+        "c:\\Users\\Administrador\\Documents\\NetBeansProjects\\Robots\\dist\\Robots.jar"
+    ]
+}

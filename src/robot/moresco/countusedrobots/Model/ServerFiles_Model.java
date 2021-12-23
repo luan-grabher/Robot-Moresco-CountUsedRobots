@@ -16,6 +16,7 @@ public class ServerFiles_Model {
     public static String[] tasksOnFolder = FileManager.getFile("\\\\HEIMERDINGER\\docs\\Informatica\\Programas\\Moresco\\01 - Programas").list();
 
     public static void getFileUsesMap() {
+        //Tarefa --> Usuario --> Contagem
         for (String line : fileUsesLines) {
             String[] cols = line.split(";", -1);
 
@@ -30,17 +31,21 @@ public class ServerFiles_Model {
                     tarefa = ini.get("replace", tarefa);
                 }
 
-                //Se nao tiver o mapa da TAREFA cria
-                uses.putIfAbsent(tarefa, new TreeMap<>());
+                //Se a tarefa não estiver em ignoredTasks e o usuário não estiver em ignoredUsers
+                if (!Controller.ignoredTasks.containsKey(tarefa) && !uses.containsKey(cols[1])) {
+                    //Se nao tiver o mapa da TAREFA cria
+                    uses.putIfAbsent(tarefa, new TreeMap<>());
 
-                //Se não tiver aquele USUARIO na tarefa coloca
-                uses.get(tarefa).putIfAbsent(cols[1], 0);
+                    //Se não tiver aquele USUARIO na tarefa coloca
+                    uses.get(tarefa).putIfAbsent(cols[1], 0);
 
-                //ADICIONA +USOS Coloca no usuario e tarefa + 1
-                uses.get(tarefa).put(cols[1], uses.get(tarefa).get(cols[1]) + 1);
+                    //ADICIONA +USOS Coloca no usuario e tarefa + 1
+                    uses.get(tarefa).put(cols[1], uses.get(tarefa).get(cols[1]) + 1);
+                }
             }
         }
 
+        //Pega as tarefas que não foram utilizadas
         for (String tarefa : tasksOnFolder) {
             //remove extensao
             tarefa = tarefa.split("\\.")[0];
@@ -50,8 +55,8 @@ public class ServerFiles_Model {
                 tarefa = ini.get("replace", tarefa);
             }
             
-            //Se nao tiver ignore nessa tarefa e essa tarefa ainda nao existir nos usos
-            if(!Controller.ignoreTasks.containsKey(tarefa) && !uses.containsKey(tarefa)){
+            //Se a tarefa não estiver em 'ignore tasks' e não estiver no mapa de usos
+            if(!Controller.ignoredTasks.containsKey(tarefa) && !uses.containsKey(tarefa)){
                 uses.putIfAbsent(tarefa, new TreeMap<>());
                 uses.get(tarefa).put("TAREFA NÃO UTILIZADA", 0);
             }

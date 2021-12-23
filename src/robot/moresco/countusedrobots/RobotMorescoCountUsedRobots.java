@@ -72,7 +72,7 @@ public class RobotMorescoCountUsedRobots {
         Map<String, Executavel> execs = new LinkedHashMap<>();
         execs.put("1 - Pegando usos do G:", controller.new getServerUses());
         execs.put("2 - Pegando usos do ZAC", controller.new getZACUses());
-        execs.put("3 - Criando tabela de usos", controller.new createTableUses());
+        execs.put("3 - Criando tabela de usos", controller.new createUsesHtmlResponse());
 
         return AppRobo.rodarExecutaveis(nomeApp, execs);
     }
