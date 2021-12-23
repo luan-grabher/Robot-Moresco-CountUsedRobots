@@ -42,7 +42,7 @@ public class ZAC_Model {
             String user = (new Parameters(monthTask.get("descricao").toString())).values.get("email").split("@")[0];
             
             //Se a tarefa não estiver em ignoredTasks e o usuário não estiver em ignoredUsers
-            if (!Controller.ignoredTasks.containsKey(tarefa) && !uses.containsKey(user)) {
+            if (!Controller.ignoredTasks.containsKey(tarefa) && !Controller.ignoredUsers.containsKey(user)) {
                 //Se nao tiver o mapa da TAREFA cria
                 uses.putIfAbsent(tarefa, new TreeMap<>());
 

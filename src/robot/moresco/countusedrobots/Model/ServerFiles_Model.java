@@ -32,7 +32,7 @@ public class ServerFiles_Model {
                 }
 
                 //Se a tarefa não estiver em ignoredTasks e o usuário não estiver em ignoredUsers
-                if (!Controller.ignoredTasks.containsKey(tarefa) && !uses.containsKey(cols[1])) {
+                if (!Controller.ignoredTasks.containsKey(tarefa) && !Controller.ignoredUsers.containsKey(cols[1])) {
                     //Se nao tiver o mapa da TAREFA cria
                     uses.putIfAbsent(tarefa, new TreeMap<>());
 

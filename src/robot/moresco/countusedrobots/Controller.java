@@ -33,10 +33,6 @@ public class Controller {
 
         @Override
         public void run() {
-            //TODO: Criar tabela html de tarefas sem duplicidade com total de usos
-            //TODO: Criar tabela html de usuarios com total de usos
-            //TODO: Criar tabela html de tarefas com usuarios e usos por tarefa
-            
             //Html table with total uses per users per task --> Tarefa --> Usuario --> Contagem
             StringBuilder taskUserUsesTable = new  StringBuilder();
             taskUserUsesTable.append("<table border=\"1\">");
@@ -48,12 +44,14 @@ public class Controller {
             
             for (Map.Entry<String, Map<String, Integer>> task : uses.entrySet()) {
                 for (Map.Entry<String, Integer> user : task.getValue().entrySet()) {
-                    //Table with total uses per users per task
-                    taskUserUsesTable.append("<tr>");
-                    taskUserUsesTable.append("<td>").append(task.getKey()).append("</td>");
-                    taskUserUsesTable.append("<td>").append(user.getKey()).append("</td>");
-                    taskUserUsesTable.append("<td>").append(user.getValue()).append("</td>");
-                    taskUserUsesTable.append("</tr>");
+                    //If user is not 'TAREFA NÃO UTILIZADA'
+                    if (!user.getKey().equals("TAREFA NÃO UTILIZADA")) {
+                        taskUserUsesTable.append("<tr>");
+                        taskUserUsesTable.append("<td>" + task.getKey() + "</td>");
+                        taskUserUsesTable.append("<td>" + user.getKey() + "</td>");
+                        taskUserUsesTable.append("<td>" + user.getValue() + "</td>");
+                        taskUserUsesTable.append("</tr>");
+                    }
                 }
             }
             //close table
@@ -80,11 +78,13 @@ public class Controller {
             }
             //Create trs with unique tasks and total uses
             for (Map.Entry<String, Integer> task : tasksUses.entrySet()) {
-                //Table with total uses per tasks with unique tasks
-                tasksUsesTable.append("<tr>");
-                tasksUsesTable.append("<td>").append(task.getKey()).append("</td>");
-                tasksUsesTable.append("<td>").append(task.getValue()).append("</td>");
-                tasksUsesTable.append("</tr>");
+                //If uses is not 0
+                if(task.getValue() != 0){
+                    tasksUsesTable.append("<tr>");
+                    tasksUsesTable.append("<td>" + task.getKey() + "</td>");
+                    tasksUsesTable.append("<td>" + task.getValue() + "</td>");
+                    tasksUsesTable.append("</tr>");
+                }
             }
             //close table
             tasksUsesTable.append("</table>");
@@ -101,10 +101,13 @@ public class Controller {
             Map<String, Integer> usersUses = new TreeMap<>();
             for (Map.Entry<String, Map<String, Integer>> task : uses.entrySet()) {
                 for (Map.Entry<String, Integer> user : task.getValue().entrySet()) {
-                    if(usersUses.containsKey(user.getKey())){
-                        usersUses.put(user.getKey(), usersUses.get(user.getKey()) + user.getValue());
-                    }else{
-                        usersUses.put(user.getKey(), user.getValue());
+                    //if uses is not 0
+                    if(user.getValue() != 0){
+                        if(usersUses.containsKey(user.getKey())){
+                            usersUses.put(user.getKey(), usersUses.get(user.getKey()) + user.getValue());
+                        }else{
+                            usersUses.put(user.getKey(), user.getValue());
+                        }
                     }
                 }
             }
@@ -121,24 +124,39 @@ public class Controller {
             usersUsesTable.append("</table>");
 
 
-            //Using taskUses, in usedTasks count tasks useds when count is greater than 0, and not used when count is 0
-            for (Map.Entry<String, Map<String, Integer>> task : uses.entrySet()) {
-                for (Map.Entry<String, Integer> user : task.getValue().entrySet()) {
-                    if(user.getValue() > 0){
-                        usedTasks++;
-                    }else{
-                        notUsedTasks++;
-                    }
+            //Using tasksUses, in usedTasks count tasks useds when count is greater than 0, and not used when count is 0
+            for (Map.Entry<String, Integer> task : tasksUses.entrySet()) {
+                if(task.getValue() != 0){
+                    usedTasks++;
+                }else{
+                    notUsedTasks++;
                 }
             }
+
+            //Html table with unique tasks not useds
+            StringBuilder notUsedTasksTable = new  StringBuilder();
+            notUsedTasksTable.append("<table border=\"1\">");
+            notUsedTasksTable.append("<tr>");
+            notUsedTasksTable.append("<th>Tarefa</th>");
+            notUsedTasksTable.append("</tr>");
+            //Create trs with unique tasks not useds with 'tasksUses' when count is 0
+            for (Map.Entry<String, Integer> task : tasksUses.entrySet()) {
+                if(task.getValue() == 0){
+                    notUsedTasksTable.append("<tr>");
+                    notUsedTasksTable.append("<td>").append(task.getKey()).append("</td>");
+                    notUsedTasksTable.append("</tr>");
+                }
+            }
+            //close table
+            notUsedTasksTable.append("</table>");
 
 
             //Total de tarefas usadas e tarefas não usadas
             StringBuilder totalTasks = new  StringBuilder();
             totalTasks.append("<table border=\"1\">");
             totalTasks.append("<tr>");
-            totalTasks.append("<th>Total de tarefas usadas</th>");
-            totalTasks.append("<th>Total de tarefas não usadas</th>");
+            totalTasks.append("<th>Total de tarefas usadas no mês ").append(((Integer)(month + 1 )).toString()).append("</th>");
+            totalTasks.append("<th>Total de tarefas não usadas no mês ").append(((Integer)(month + 1 )).toString()).append("</th>");
             totalTasks.append("</tr>");
             totalTasks.append("<tr>");
             totalTasks.append("<td>").append(usedTasks).append("</td>");
@@ -157,6 +175,9 @@ public class Controller {
             allTables.append(usersUsesTable);
             allTables.append("<h1>Tabela de usos por tarefa com usuarios e usos por tarefa</h1>");
             allTables.append(taskUserUsesTable);            
+            //Tarefas não usadas
+            allTables.append("<h1>Tabela de tarefas não usadas</h1>");
+            allTables.append(notUsedTasksTable);            
             
 
             //Show all tables in throw new Warning
