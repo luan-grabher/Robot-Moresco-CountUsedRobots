@@ -20,27 +20,30 @@ public class ServerFiles_Model {
         for (String line : fileUsesLines) {
             String[] cols = line.split(";", -1);
 
-            //Pega data
-            Calendar cal = Dates.getCalendarFromFormat(cols[0].split(" ")[0], "yyyy-MM-dd");
+            //Se cols tiver pelo menos 3 colunas e cols[0] e cols[1] e cols[2] não forem vazias
+            if (cols.length >= 3 && !cols[0].isEmpty() && !cols[1].isEmpty() && !cols[2].isEmpty()) {
+                //Pega data
+                Calendar cal = Dates.getCalendarFromFormat(cols[0].split(" ")[0], "yyyy-MM-dd");
 
-            //Se for do mes definido
-            if (cal.get(Calendar.MONTH) == month && cal.get(Calendar.YEAR) == year) {
-                String tarefa = cols[2];
+                //Se for do mes definido
+                if (cal.get(Calendar.MONTH) == month && cal.get(Calendar.YEAR) == year) {
+                    String tarefa = cols[2];
 
-                if (ini.get("replace", tarefa) != null) {
-                    tarefa = ini.get("replace", tarefa);
-                }
+                    if (ini.get("replace", tarefa) != null) {
+                        tarefa = ini.get("replace", tarefa);
+                    }
 
-                //Se a tarefa não estiver em ignoredTasks e o usuário não estiver em ignoredUsers
-                if (!Controller.ignoredTasks.containsKey(tarefa) && !Controller.ignoredUsers.containsKey(cols[1])) {
-                    //Se nao tiver o mapa da TAREFA cria
-                    uses.putIfAbsent(tarefa, new TreeMap<>());
+                    //Se a tarefa não estiver em ignoredTasks e o usuário não estiver em ignoredUsers
+                    if (!Controller.ignoredTasks.containsKey(tarefa) && !Controller.ignoredUsers.containsKey(cols[1])) {
+                        //Se nao tiver o mapa da TAREFA cria
+                        uses.putIfAbsent(tarefa, new TreeMap<>());
 
-                    //Se não tiver aquele USUARIO na tarefa coloca
-                    uses.get(tarefa).putIfAbsent(cols[1], 0);
+                        //Se não tiver aquele USUARIO na tarefa coloca
+                        uses.get(tarefa).putIfAbsent(cols[1], 0);
 
-                    //ADICIONA +USOS Coloca no usuario e tarefa + 1
-                    uses.get(tarefa).put(cols[1], uses.get(tarefa).get(cols[1]) + 1);
+                        //ADICIONA +USOS Coloca no usuario e tarefa + 1
+                        uses.get(tarefa).put(cols[1], uses.get(tarefa).get(cols[1]) + 1);
+                    }
                 }
             }
         }
